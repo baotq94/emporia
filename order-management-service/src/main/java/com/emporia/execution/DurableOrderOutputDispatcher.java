@@ -80,7 +80,7 @@ public class DurableOrderOutputDispatcher {
                           outbox.command_id, outbox.order_id, outbox.user_subject,
                           outbox.desk_id, outbox.event_type, outbox.order_version,
                           outbox.order_status, outbox.occurred_at, outbox.payload
-        """, this::map, BATCH_SIZE);
+        """, (rs, row) -> map(rs), BATCH_SIZE);
         refreshBacklogMetrics();
         claimed.forEach(this::deliver);
     }
@@ -147,7 +147,7 @@ public class DurableOrderOutputDispatcher {
         return retentionDays;
     }
 
-    private PendingOutput map(ResultSet rs, int row) throws SQLException {
+    private PendingOutput map(ResultSet rs) throws SQLException {
         return new PendingOutput(rs.getLong("sequence_id"), new OrderDomainEvent(
                 rs.getInt("schema_version"),
                 rs.getObject("event_id", UUID.class),

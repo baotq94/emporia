@@ -7,7 +7,7 @@
 check_exchange_core() {
     echo "==> Checking exchange-core is installed locally"
     if ! mvn -q -f "$repo_root/pom.xml" dependency:get \
-            -Dartifact=exchange.core2:exchange-core:0.5.4-SNAPSHOT \
+            -Dartifact=exchange.core2:exchange-core:0.5.8-emporia \
             -o >/dev/null 2>&1; then
         echo "exchange-core is not in your local Maven repository." >&2
         echo "Clone and install it first (see README.md):" >&2
