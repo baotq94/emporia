@@ -75,15 +75,16 @@ start_service user-preferences-service user-preferences-service mvn "${MAVEN_TES
 
 start_service market-data-service market-data-service mvn "${MAVEN_TEST_SKIP_ARGS[@]}" spring-boot:run
 
-DB_URL=jdbc:postgresql://localhost:5436/emporia_order_management \
-DB_PASSWORD=admin123 \
-EXECUTION_VENUE_MODE=${EXECUTION_VENUE_MODE:-exchange-core} \
-EXCHANGE_CORE_ACCOUNTING_MODE=${EXCHANGE_CORE_ACCOUNTING_MODE:-full-equity-risk} \
-EXCHANGE_CORE_PORTFOLIO_URL=${EXCHANGE_CORE_PORTFOLIO_URL:-http://localhost:8088} \
 # Default true, not false. The property used to be bound to nothing and the
 # engine journalled regardless, so false here never took effect; now that it
 # does, true is what preserves the behaviour every measurement in
 # CONFIGURATION.md was taken under.
+DB_URL=jdbc:postgresql://localhost:5436/emporia_order_management \
+EXECUTION_DB_URL=jdbc:postgresql://localhost:5437/emporia_execution \
+DB_PASSWORD=admin123 \
+EXECUTION_VENUE_MODE=${EXECUTION_VENUE_MODE:-exchange-core} \
+EXCHANGE_CORE_ACCOUNTING_MODE=${EXCHANGE_CORE_ACCOUNTING_MODE:-full-equity-risk} \
+EXCHANGE_CORE_PORTFOLIO_URL=${EXCHANGE_CORE_PORTFOLIO_URL:-http://localhost:8088} \
 EXCHANGE_CORE_JOURNALING=${EXCHANGE_CORE_JOURNALING:-true} \
 EXCHANGE_CORE_SNAPSHOT_INTERVAL=${EXCHANGE_CORE_SNAPSHOT_INTERVAL:-60s} \
 EXCHANGE_CORE_RETAINED_CHECKPOINTS=${EXCHANGE_CORE_RETAINED_CHECKPOINTS:-2} \
